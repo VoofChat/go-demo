@@ -1,0 +1,41 @@
+server:
+  port: "8080"
+
+# 日志配置
+log:
+  level: debug
+  filename: app.zap
+  maxsize: 200
+  max_age: 7
+  max_backups: 10
+
+# MySQL配置
+mysql:
+  demo:
+    service: demo
+    database: demo
+    addr: "127.0.0.1"
+    user: "root"
+    password: "qwerasdf"
+    maxidleconns: 50
+    maxopenconns: 100
+    maxIdleTime: 300s
+    connMaxLifeTime: 3600s
+    connTimeOut: 1500ms
+    writeTimeOut: 3s
+    readTimeOut: 3s
+
+# Redis配置
+redis:
+  demo:
+    service: demo
+    addr: "127.0.0.1:3360"
+    user: ""
+    password: ""
+    maxIdle: 10
+    maxActive: 50
+    idleTimeout: 5m
+    connTimeOut: 1200ms
+    readTimeOut: 1200ms
+    writeTimeOut: 1200ms
+    maxConnLifetime: 10m
