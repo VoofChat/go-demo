@@ -10,6 +10,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"time"
 )
 
 var db *gorm.DB
@@ -193,13 +194,30 @@ func transaction2(ctx context.Context) {
 	err = fmt.Errorf("手动触发事务失败") // 手动触发事务失败
 }
 
+// withContext1 带上下文的示例1
+func withContext1(ctx context.Context) {
+	// 创建一个上下文，并设置2s超时
+	ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+	defer cancel()
+
+	user, err := dao.NewUserDao(db).GetByUserId(ctx, 2020062500017)
+	// SELECT * FROM `tbl_user` WHERE user_id = 2020062500017
+	if err != nil {
+		fmt.Println("GetByUserId failed. ", err)
+		return
+	}
+	fmt.Println("GetByUserId success. ", jsonMarshal(user))
+}
+
 func main() {
 	ctx := context.Background()
 
-	//query1(ctx)
+	query1(ctx)
 	//update1(ctx)
 	//save1(ctx)
 
 	//transaction1(ctx)
-	transaction2(ctx)
+	//transaction2(ctx)
+
+	//withContext1(ctx)
 }
